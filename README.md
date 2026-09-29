@@ -1,32 +1,42 @@
-# Akinator Vercel
+# Akinator Web — Vercel
 
-Versi ini tidak menggunakan CORS proxy publik. Browser memanggil endpoint `/api/*` pada domain Vercel sendiri, lalu Vercel meneruskan request ke `https://id.akinator.com`.
-
-## Deploy
-
-1. Upload/import folder atau ZIP ini ke Vercel.
-2. Framework Preset: Other.
-3. Build Command: kosong.
-4. Output Directory: `public`.
-5. Deploy.
-
-Atau dengan CLI:
-
-```bash
-npm i -g vercel
-vercel
-```
-
-Setelah deploy, buka URL Vercel.
+Website Akinator dengan UI modern yang mengikuti alur script CLI: pilih tema → jawab pertanyaan → tampilkan tebakan → konfirmasi.
 
 ## Struktur
 
-- `public/index.html` — website
-- `api/[...path].js` — proxy serverless ke Akinator
-- `vercel.json` — konfigurasi runtime
+- `public/index.html` — halaman utama
+- `public/styles.css` — tampilan responsive
+- `public/app.js` — state game & interaksi UI
+- `api/akinator.js` — serverless proxy untuk endpoint Akinator
+- `vercel.json` — konfigurasi Vercel
 
-Tidak membutuhkan npm package.
+## Deploy ke Vercel
 
-## Catatan
+### Cara 1 — lewat GitHub
+1. Upload seluruh isi folder ini ke repository baru.
+2. Import repository tersebut di Vercel.
+3. Framework preset: **Other**.
+4. Build Command: kosongkan.
+5. Output Directory: kosongkan.
+6. Deploy.
 
-Serverless proxy meneruskan cookie `Set-Cookie` dari Akinator agar session game dapat dipertahankan oleh browser. Jika Akinator memblokir IP/data center Vercel atau mengubah API internalnya, proxy tidak dapat menjamin game tetap bekerja.
+### Cara 2 — Vercel CLI
+
+```bash
+npm i -g vercel
+vercel login
+cd akinator-vercel
+vercel
+```
+
+Untuk production:
+
+```bash
+vercel --prod
+```
+
+## Catatan penting
+
+Backend dijalankan sebagai Vercel Serverless Function supaya browser tidak langsung melakukan request lintas-origin ke `id.akinator.com`. Cookie/session game dikembalikan ke browser dan dikirim lagi pada request berikutnya.
+
+Layanan pihak ketiga dapat berubah sewaktu-waktu. Jika Akinator mengubah endpoint, format HTML, atau format JSON, parser pada `api/akinator.js` perlu disesuaikan.
