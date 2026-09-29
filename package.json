@@ -1,0 +1,12 @@
+{
+  "name": "akinator-web-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A polished Akinator-style web interface backed by the id.akinator.com game endpoints.",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
