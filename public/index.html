@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#08090d" />
+  <meta name="description" content="Akinator web game — pikirkan sesuatu, jawab pertanyaannya, dan biarkan Akinator menebak." />
+  <title>Akinator — Tebak Pikiranmu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Akinator Home">
+      <span class="brand-mark">A</span>
+      <span>Akinator<span class="dot">.</span></span>
+    </a>
+    <div class="top-actions">
+      <a href="https://whatsapp.com/channel/0029VbCv97v9Bb5tC5cZFl0K" target="_blank" rel="noreferrer" class="channel-link">Saluran <span>↗</span></a>
+      <button class="icon-btn" id="resetTop" title="Mulai ulang">↻</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero" id="hero">
+      <div class="eyebrow"><span class="live-dot"></span> AI GUESSING GAME</div>
+      <h1>Pikirkan sesuatu.<br><em>Biarkan dia menebak.</em></h1>
+      <p class="hero-copy">Pilih tema, simpan satu nama di kepala, lalu jawab sejujur mungkin. Kita lihat seberapa jauh dia bisa membaca pikiranmu.</p>
+      <div class="creator">Dibuat oleh <strong>IzzXd</strong> <span>·</span> versi web</div>
+    </section>
+
+    <section class="panel" id="setupPanel">
+      <div class="panel-heading">
+        <div>
+          <span class="step-label">01 / MULAI</span>
+          <h2>Pilih tema permainan</h2>
+        </div>
+        <span class="tiny-note">3 pilihan</span>
+      </div>
+      <div class="theme-grid">
+        <button class="theme-card selected" data-theme="1">
+          <span class="theme-icon">♙</span>
+          <span class="theme-title">Karakter</span>
+          <span class="theme-desc">Orang, tokoh, karakter</span>
+          <span class="check">✓</span>
+        </button>
+        <button class="theme-card" data-theme="2">
+          <span class="theme-icon">◒</span>
+          <span class="theme-title">Hewan</span>
+          <span class="theme-desc">Dari kecil sampai liar</span>
+          <span class="check">✓</span>
+        </button>
+        <button class="theme-card" data-theme="3">
+          <span class="theme-icon">◇</span>
+          <span class="theme-title">Benda</span>
+          <span class="theme-desc">Barang & benda sehari-hari</span>
+          <span class="check">✓</span>
+        </button>
+      </div>
+      <button class="primary-btn" id="startBtn">Mulai permainan <span>→</span></button>
+      <p class="fineprint">Game memakai koneksi ke layanan Akinator untuk memproses pertanyaan.</p>
+    </section>
+
+    <section class="game hidden" id="gamePanel">
+      <div class="game-head">
+        <div>
+          <span class="step-label" id="gameTheme">KARAKTER</span>
+          <div class="question-count"><span id="qNum">1</span> <span>/ pertanyaan</span></div>
+        </div>
+        <button class="ghost-btn" id="backBtn">← Kembali</button>
+      </div>
+
+      <div class="progress-wrap"><div class="progress-bar"><span id="progressBar"></span></div><span id="progressText">0%</span></div>
+
+      <div class="question-card">
+        <div class="question-mark">?</div>
+        <p class="question" id="question">Memulai permainan…</p>
+        <p class="hint">Jawab berdasarkan apa yang kamu pikirkan.</p>
+      </div>
+
+      <div class="answers" id="answers">
+        <button data-answer="1"><span class="answer-key">1</span><span>Ya</span><kbd>Y</kbd></button>
+        <button data-answer="2"><span class="answer-key">2</span><span>Tidak</span><kbd>N</kbd></button>
+        <button data-answer="3"><span class="answer-key">3</span><span>Tidak tahu</span><kbd>U</kbd></button>
+        <button data-answer="4"><span class="answer-key">4</span><span>Mungkin</span><kbd>M</kbd></button>
+        <button data-answer="5"><span class="answer-key">5</span><span>Mungkin tidak</span><kbd>T</kbd></button>
+      </div>
+
+      <div class="game-footer">Tekan angka <span>1–5</span> untuk menjawab · <span>←</span> untuk kembali</div>
+    </section>
+
+    <section class="result hidden" id="resultPanel">
+      <div class="result-badge">TEBAKAN SELESAI</div>
+      <div class="result-card">
+        <div class="result-image-wrap"><img id="resultImage" alt="Hasil tebakan" /><div class="image-fallback" id="imageFallback">A</div></div>
+        <div class="result-content">
+          <span class="result-kicker">Akinator menebak…</span>
+          <h2 id="resultName">—</h2>
+          <p id="resultDescription">—</p>
+          <div class="result-meta"><span id="resultQuestions">0 pertanyaan</span><span>·</span><span id="resultTheme">Karakter</span></div>
+        </div>
+      </div>
+      <div class="result-actions"><button class="primary-btn" id="againBtn">Main lagi <span>↻</span></button><a class="secondary-btn" href="https://whatsapp.com/channel/0029VbCv97v9Bb5tC5cZFl0K" target="_blank" rel="noreferrer">Ikuti saluran <span>↗</span></a></div>
+    </section>
+
+    <section class="lost hidden" id="lostPanel">
+      <div class="lost-icon">—</div>
+      <span class="step-label">KALI INI GAGAL</span>
+      <h2>Akinator menyerah.</h2>
+      <p>Jawabanmu terlalu sulit ditebak. Tidak apa-apa — coba lagi dengan sesuatu yang berbeda.</p>
+      <button class="primary-btn" id="lostAgain">Coba lagi <span>↻</span></button>
+    </section>
+
+    <div class="error-toast hidden" id="errorToast"><span>!</span><p id="errorText">Terjadi kesalahan.</p><button id="closeError">×</button></div>
+  </main>
+
+  <footer><span>Akinator Web</span><span>·</span><span>Creator: IzzXd</span></footer>
+  <script src="/app.js"></script>
+</body>
+</html>
